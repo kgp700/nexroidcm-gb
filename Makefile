@@ -190,8 +190,8 @@ SUBARCH := arm
 # Default value for CROSS_COMPILE is not to prefix executables
 # Note: Some architectures assign CROSS_COMPILE in their arch/*/Makefile
 export KBUILD_BUILDHOST := $(SUBARCH)
-ARCH		?= $(SUBARCH)
-CROSS_COMPILE   ?=  arm-eabi-
+ARCH		?= arm
+CROSS_COMPILE	?= /root/1test/toolchain/arm-eabi-4.5.4/bin/arm-eabi-
 
 # Architecture as present in compile.h
 UTS_MACHINE 	:= $(ARCH)
@@ -337,8 +337,8 @@ MODFLAGS	= -DMODULE
 CFLAGS_MODULE   = $(MODFLAGS)
 AFLAGS_MODULE   = $(MODFLAGS)
 LDFLAGS_MODULE  = -T $(srctree)/scripts/module-common.lds
-CFLAGS_KERNEL	=
-AFLAGS_KERNEL	=
+CFLAGS_KERNEL	= -mtune=cortex-a8 -march=armv7-a -mfpu=neon -fsingle-precision-constant -ftree-vectorize -funswitch-loops -fforce-addr -fprofile-correction -falign-loops -fpredictive-commoning -fgcse-after-reload -pipe
+AFLAGS_KERNEL	= -mtune=cortex-a8 -march=armv7-a -mfpu=neon -fsingle-precision-constant -ftree-vectorize -funswitch-loops -fforce-addr -fprofile-correction -falign-loops -fpredictive-commoning -fgcse-after-reload -pipe
 CFLAGS_GCOV	= -fprofile-arcs -ftest-coverage
 
 
@@ -354,7 +354,11 @@ KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -fno-strict-aliasing -fno-common \
 		   -Werror-implicit-function-declaration \
 		   -Wno-format-security \
-		   -fno-delete-null-pointer-checks
+		   -fno-delete-null-pointer-checks \
+		   -mtune=cortex-a8 -march=armv7-a -mfpu=neon \
+		   -fsingle-precision-constant -ftree-vectorize -funswitch-loops \
+		   -fforce-addr -fprofile-correction -falign-loops \
+	   	   -fpredictive-commoning -fgcse-after-reload -pipe
 KBUILD_AFLAGS   := -D__ASSEMBLY__
 
 # Read KERNELRELEASE from include/config/kernel.release (if it exists)
