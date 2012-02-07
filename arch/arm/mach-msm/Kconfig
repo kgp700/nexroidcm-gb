@@ -388,6 +388,18 @@ config HTC_PWRSINK
 	default y
 	bool "HTC Power Sink Driver"
 
+config HTC_PWRSINK
+	depends on MSM_SMD
+	default y
+	bool "HTC Power Sink Driver"
+
+-config QSD_SVS
+	bool "QSD Static Voltage Scaling"
+	depends on (ARCH_MSM_SCORPION)
+	default y
+	help
+	  Enables static voltage scaling using the TPS65023 PMIC.
+
 config HTC_POWER_COLLAPSE_MAGIC
   default n
   bool "Check Power Collapse State"
@@ -626,6 +638,16 @@ config AXI_SCREEN_POLICY
   default y
   help
     Simple AXI scaling based on screen ON/OFF and PWRC.
+
+
+config MSM_CPU_AVS
+	bool "Enable Adaptive Voltage Scaling (AVS)"
+	depends on (ARCH_MSM_SCORPION && QSD_SVS)
+	default y
+	help
+	  This enables the Adaptive Voltage Scaling feature of
+	  Qualcomm ARMv7 CPUs. It adjusts the voltage for each frequency
+	  based on feedback from three ring oscillators in the CPU.
 
 config MSM_HW3D
 	tristate "MSM Hardware 3D Register Driver"
